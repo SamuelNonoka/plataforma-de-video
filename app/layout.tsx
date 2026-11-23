@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang='en' className='scrollbar-none overflow-y-auto'>
-      <body className='bg-black text-white'>{children}</body>
+      <body className='bg-[#141414] text-white'>{children}</body>
     </html>
   );
 }
