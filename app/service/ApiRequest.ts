@@ -5,13 +5,13 @@ export interface ApiQueryParams {
 }
 
 export interface RequestOptions {
-  page?: number;
+  _page?: number;
   _limit?: number;
   rating_like?: string;
 }
 
 export const defaultOptions: RequestOptions = {
-  page: 1,
+  _page: 1,
   _limit: 10,
 };
 

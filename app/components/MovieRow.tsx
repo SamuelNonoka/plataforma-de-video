@@ -1,28 +1,12 @@
-import Image from 'next/image';
+import { Movies } from '../types/movie';
+import { MovieCard } from './MovieCard';
 
 type MovieRowProps = {
   sectionTitle: string;
+  movies: Movies;
 };
 
-type MovieCardProps = {
-  index: number;
-};
-
-const MovieCard = ({ index }: MovieCardProps) => (
-  <div
-    className='group relative h-28 min-w-[200px] transform bg-gradient-to-t from-transparent to-black transition duration-200 ease-in hover:z-50 hover:scale-110 md:h-40 md:min-w-[260px]'
-    key={index}
-  >
-    <Image
-      src={`/item_${index}.png`}
-      fill={true}
-      alt='Maid'
-      className='rounded'
-    />
-  </div>
-);
-
-export default function MovieRow({ sectionTitle }: MovieRowProps) {
+export default function MovieRow({ sectionTitle, movies }: MovieRowProps) {
   return (
     <div className='flex-col space-y-4'>
       <div className='-ml-2 flex'>
@@ -31,9 +15,9 @@ export default function MovieRow({ sectionTitle }: MovieRowProps) {
         </h2>
       </div>
 
-      <div className='-ml-8 flex scrollbar-none space-x-4 overflow-x-scroll p-6'>
-        {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((index) => (
-          <MovieCard key={index} index={index} />
+      <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8'>
+        {movies.map((movie, index) => (
+          <MovieCard key={index} movie={movie} />
         ))}
       </div>
     </div>
