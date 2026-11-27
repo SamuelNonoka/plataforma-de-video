@@ -3,9 +3,27 @@ import { UserProfile } from './UserProfile';
 import { Logo } from './Logo';
 import { NavLinks } from './NavLinks';
 import { useScroll } from '../hooks/useScroll';
+import { ChangeEvent, useState } from 'react';
+import { SearchForm } from './SearchForm';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Header() {
   const isScrolled = useScroll();
+  const router = useRouter();
+  const params = useSearchParams();
+  const initialSearchTerm = params.get('title') || '';
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
+
+  const onSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const onSearch = (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newParams = new URLSearchParams(params.toString());
+    newParams.set('title', searchTerm);
+    router.push(`/search?${newParams.toString()}`);
+  };
 
   return (
     <header
@@ -16,7 +34,15 @@ export default function Header() {
         <NavLinks />
       </div>
 
-      <UserProfile />
+      <div className='flex items-center space-x-2 md:space-x-8'>
+        <SearchForm
+          searchTerm={searchTerm}
+          onSearch={onSearch}
+          onSearchTermChange={onSearchTermChange}
+        />
+
+        <UserProfile />
+      </div>
     </header>
   );
 }
